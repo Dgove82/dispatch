@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>首页</title>
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/navBar.css">
+  <link rel="stylesheet" href="css/loading.css">
+  <link rel="stylesheet" href="css/tables.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/finance.css">
+  <script src="js/base.js"></script>
+  <script src="js/navBar.js"></script>
+  <script src="js/finance.js"></script>
+</head>
+<body>
+<!-- 导航栏 -->
+
+<!-- 内容部分 -->
+<article>
+  <ul class="pagination">
+    <li class="subPage">
+      <div class="title">我的账单</div>
+      <ul class="ops">
+        <li class="btn flash">刷新</li>
+      </ul>
+      <div class="db-easy">
+        <ul class="db-head">
+          <li class="key">收支来源</li>
+          <li class="key">数额</li>
+          <li class="key">备注</li>
+          <li class="key">创建时间</li>
+        </ul>
+        <div class="db-body">
+          <ul class="db-tr">
+            <li class="value" style="color:red">网络请求失败</li>
+          </ul>
+        </div>
+        <ul class="db-bottom">
+
+        </ul>
+
+      </div>
+
+    </li>
+    <li class="subPage">
+      <div class="title">钱包</div>
+      <ul class="infoBox">
+        <li class="line">姓名:<span class="value">张三</span></li>
+      </ul>
+    </li>
+    <li class="subPage">
+      <div class="title">账单结算</div>
+
+      <ul class="ops">
+        <li class="btn flash">刷新</li>
+        <li class="btn settle">结算</li>
+      </ul>
+      <!-- 待接单的数据表 -->
+      <div class="db">
+        <ul class="db-head">
+          <li class="all-check" title="是否全选"><label><input type="checkbox" disabled></label></li>
+          <li class="key">用户</li>
+          <li class="key">数额</li>
+          <li class="key">支付宝账户</li>
+          <li class="key">申请时间</li>
+          <li class="key">状态</li>
+        </ul>
+        <div class="db-body">
+          <ul class="db-tr">
+            <li class="check"><label><input type="checkbox"></label></li>
+            <li class="value">1</li>
+            <li class="value">2</li>
+            <li class="value">3</li>
+          </ul>
+        </div>
+        <ul class="db-bottom">
+          <li class="prev">上一页</li>
+          <li class="go-page">前往第
+            <label><input type="text" placeholder="1">页</label>
+          </li>
+          <li class="next">下一页</li>
+        </ul>
+      </div>
+    </li>
+    <li class="subPage">
+      <div class="title">账单流水</div>
+      <ul class="ops">
+        <li class="btn flash">刷新</li>
+      </ul>
+      <div class="db-easy">
+        <ul class="db-head">
+          <li class="key">用户</li>
+          <li class="key">收支来源</li>
+          <li class="key">数额</li>
+          <li class="key">备注</li>
+          <li class="key">创建时间</li>
+        </ul>
+        <div class="db-body">
+          <ul class="db-tr">
+            <li class="value" style="color:red">网络请求失败</li>
+          </ul>
+        </div>
+        <ul class="db-bottom">
+        </ul>
+      </div>
+    </li>
+  </ul>
+</article>
+<!-- 底部 -->
+<div class="bottom">
+</div>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+{
+  "json": {
+    "Tid": 3725222040959858471,
+    "Status": "WAIT_SELLER_SEND_GOODS",
+    "SellerNick": "合从云计算",
+    "BuyerNick": "t**",
+    "BuyerOpenUid": "AAFS_gqxAAShimt5geofn3Ln",
+    "Payment": "0.97",
+    "Type": "guarantee_trade"
+  }
+}
+
+<QueryDict: {'timestamp': ['1704724999'],
+'sign': ['4974A137EEBEADB66CE53F6FB8178D2A'],
+'aopic': ['2097152'], 'fromPlatform': ['TbAlds']}>
+
+<QueryDict: {
+'json': [
+'{"Tid":3725222040959858471,
+"Status": "WAIT_SELLER_SEND_GOODS",
+"SellerNick": "合从云计算",
+"BuyerNick": "t**",
+"BuyerOpenUid": "AAFS_gqxAAShimt5geofn3Ln",
+"Payment": "0.97", "Type": "guarantee_trade"
+}']}>
+
+
+推送类别2097152, 数据包{'Tid': 3730180537310019358,
+'Status': 'WAIT_SELLER_SEND_GOODS',
+'SellerNick': '合从云计算',
+'BuyerNick': 't**',
+'BuyerOpenUid': 'AAHF_gqxAAShimt5geiIs78S',
+'Payment': '0.97',
+'Type': 'guarantee_trade',
+'createTime': '1704984012'
+}
+
+推送类别2097152, 数据包{'Tid': 3730181797606364437,
+'Status': 'WAIT_SELLER_SEND_GOODS',
+'SellerNick': '合从云计算',
+'BuyerNick': 'l**',
+'BuyerOpenUid': 'AAHK_gqxAAShiml5geqUGjyn',
+'Payment': '1.00',
+'Type': 'guarantee_trade',
+'createTime': '1704984157'}
+
+
+
+查询中
+查询数据包{'IsSuccess': True, 'Data': {'Platform': 'TAOBAO',
+'PlatformUserId': '2215633822127',
+'ExtendedFields': {},
+'Tid': 3730181797606364437,
+'TidStr': '3730181797606364437',
+'Status': 'WAIT_BUYER_PAY',
+'SellerNick': '合从云计算',
+'BuyerNick': 'l**',
+'BuyerOpenUid': 'AAHK_gqxAAShiml5geqUGjyn',
+'Type': 'fixed',
+'Price': '2.00',
+'Num': 1,
+'TotalFee': '2.00',
+'Payment': '1.00',
+'PicPath': 'https://img.alicdn.com/bao/uploaded/i1/2215633822127/O1CN016sWiDH1RaDICEI6ZG_!!2215633822127.png',
+'PostFee': '0.00',
+'Created': '2024-01-11 22:42:33',
+'TradeFrom': 'WAP,WAP',
+'Orders': [
+{
+'Oid': 3730181797606364437,
+'OidStr': '3730181797606364437',
+'NumIid': 730354970556,
+'Title': 'ai绘图 midjourney代出图 代画绘画生成图片做图代跑图MJ插画设计',
+'Price': '2.00',
+'Num': 1,
+'TotalFee': '1.00',
+'Payment': '1.00',
+'PicPath': 'https://img.alicdn.com/bao/uploaded/i1/2215633822127/O1CN016sWiDH1RaDICEI6ZG_!!2215633822127.png'
+}
+],
+'SellerFlag': 0},
+'Error_Code': 0,
+'Error_Msg': '',
+'AllowRetry': None,
+'RequestId': '2024011122423617419727'}
+订单3730181797606364437入库成功
+[11/Jan/2024 22: 42: 36] "POST /push/receiveMsg/?timestamp=1704984157&sign=1DB58BF610798E93CBE516936F0DAFA1&aopic=2097152&fromPlatform=TbAlds HTTP/1.1" 200 39
+
+推送类别256, 数据包{'Platform': 'TAOBAO',
+'PlatformUserId': '2215633822127',
+'Tid': 3730180537310019358,
+'TidStr': '3730180537310019358',
+'Oid': 3730180537310019358,
+'OidStr': '3730180537310019358',
+'RefundId': 256503924444015893,
+'RefundIdStr': '256503924444015893',
+'SellerNick': '合从云计算',
+'BuyerNick': 't**', 'BuyerOpenUid': 'AAHF_gqxAAShimt5geiIs78S',
+'RefundFee': '0.97', 'RefundPhase': 'onsale', 'BillType': 'refund_bill',
+'Modified': '2024-01-11 22:42:51', 'createTime': '1704984172'}
+[11/Jan/2024 22: 42: 52] "POST /push/receiveMsg/?timestamp=1704984172&sign=8896D14979C8CCEC4E8F343D5D5ABAFA&aopic=256&fromPlatform=TbAlds HTTP/1.1" 200 37
+
+推送类别65536, 数据包{'Platform': 'TAOBAO',
+'PlatformUserId': '2215633822127', 'Tid': 3730180537310019358,
+'TidStr': '3730180537310019358', 'Oid': 3730180537310019358,
+'OidStr': '3730180537310019358', 'RefundId': 256503924444015893,
+'RefundIdStr': '256503924444015893',
+'SellerNick': '合从云计算', 'BuyerNick': 't**',
+'BuyerOpenUid': 'AAHF_gqxAAShimt5geiIs78S',
+'RefundFee': '0.97', 'RefundPhase': 'onsale',
+'BillType': 'refund_bill', 'Modified': '2024-01-11 22:42:53', 'createTime': '1704984174'}
+[11/Jan/2024 22: 42: 53] "POST /push/receiveMsg/?timestamp=1704984174&sign=F43B2E54CADDB35A6DE289B596016682&aopic=65536&fromPlatform=TbAlds HTTP/1.1" 200 37
+
+推送类别2097152, 数据包{'Tid': 3730181797606364437,
+'Status': 'WAIT_SELLER_SEND_GOODS',
+'SellerNick': '合从云计算',
+'BuyerNick': 'l**', 'BuyerOpenUid': 'AAHK_gqxAAShiml5geqUGjyn',
+'Payment': '1.00', 'Type': 'guarantee_trade', 'createTime': '1704984176'}
+[11/Jan/2024 22: 42: 55] "POST /push/receiveMsg/?timestamp=1704984176&sign=7917D99DAF775EFE29BC2F0C7F667156&aopic=2097152&fromPlatform=TbAlds HTTP/1.1" 200 39

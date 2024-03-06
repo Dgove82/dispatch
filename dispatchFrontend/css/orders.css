@@ -1,0 +1,94 @@
+.subPage{
+    position: relative;
+    top: 30px;
+    text-align: center;
+    display: none;
+}
+
+.subPage .title{
+    background-color: #fff;
+    width: 80%;
+    margin: 10px 10%;
+    font-size: 30px;
+    line-height: 100px;
+    letter-spacing: 30px;
+    border-radius: 30px;
+}
+.subPage .db-easy .db-body .value:nth-child(6){
+    font-size:13px;
+    line-height: 19px;
+}
+.subPage .db-easy .db-body .value:nth-child(2){
+    font-size:13px;
+    line-height: 22px;
+}
+.subPage .db .db-body .value:nth-child(8){
+    font-size:13px;
+    line-height: 19px;
+}
+.subPage .db .db-body .value:nth-child(3){
+    font-size:13px;
+    line-height: 22px;
+}
+.subPage .op{
+    width: 80%;
+    margin: 10px 10%;
+    font-size: 16px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.db-tr .value .sBox{
+    background-color: #3b69da;
+    border-radius: 3px;
+    color: white;
+    height: 28px;
+    width: 60px;
+    margin: 5px auto;
+    line-height: 28px;
+    font-size: 13px;
+}
+
+.db-tr .value .assign:hover,.db .db-tr .value .process:hover,.db-tr .value .rob:hover{
+    cursor: pointer;
+    background-color: #f0561f !important;
+}
+
+.db-bottom .prev, .db-bottom .next{
+    cursor: pointer;
+    width: 50%;
+    background-color: #3b69da;
+    margin: auto;
+    color: #ffffff;
+    border-radius: 5px;
+}
+.db-bottom .prev:hover, .db-bottom .next:hover{
+    background-color: #f0561f;
+}
+
+
+
+/* 按钮 */
+.subPage .op .btn{
+    padding: 3px;
+    background-color: #3b69da;
+    border: 1px solid white;
+    color: white;
+    border-radius: 3px;
+    margin-right: 3px;
+}
+
+.subPage .op .btn:hover{
+    background-color: #f0561f;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,9 @@
+django==4.2.5
+djangorestframework
+django-cors-headers
+django-crontab
+cryptography
+uwsgi
+pymysql
+requests
+pyyaml

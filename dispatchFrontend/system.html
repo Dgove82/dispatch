@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>首页</title>
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/navBar.css">
+  <link rel="stylesheet" href="css/loading.css">
+  <link rel="stylesheet" href="css/tables.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/system.css">
+  <script src="js/base.js"></script>
+  <script src="js/navBar.js"></script>
+  <script src="js/system.js"></script>
+
+</head>
+<body>
+<!-- 导航栏 -->
+
+<!-- 内容部分 -->
+<article>
+  <ul class="pagination">
+    <li class="subPage">
+      <div class="title">个人信息</div>
+      <ul class="infoBox">
+        <li class="line">姓名:<span class="value">张三</span></li>
+      </ul>
+    </li>
+    <li class="subPage">
+      <div class="title">密码修改</div>
+      <ul class="infoBox">
+        <li class="line"><div class="tt">旧密码:</div><label><input type="text" value=""></label></li>
+        <li class="line"><div class="tt">新密码:</div><label><input type="text" value=""></label></li>
+        <li class="line"><div class="tt">重新输入密码:</div><label><input type="text" value=""></label></li>
+        <li class="op"><div class="submit">提交</div></li>
+      </ul>
+    </li>
+    <li class="subPage">
+      <div class="title">用户管理</div>
+      <ul class="ops">
+          <li class="btn flash">刷新</li>
+          <li class="btn update">修改</li>
+          <li class="btn delete">删除</li>
+        <li class="btn add">新增</li>
+      </ul>
+      <!-- 待接单的数据表 -->
+      <div class="db">
+        <ul class="db-head">
+          <li class="all-check" title="是否全选"><label><input type="checkbox" disabled></label></li>
+          <li class="key">编号</li>
+          <li class="key">用户名</li>
+          <li class="key">姓名</li>
+          <li class="key">权限</li>
+          <li class="key">分成</li>
+          <li class="key">手机号</li>
+          <li class="key">支付宝</li>
+        </ul>
+        <div class="db-body">
+          <ul class="db-tr">
+            <li class="check"><label><input type="checkbox"></label></li>
+            <li class="value">1</li>
+            <li class="value">2</li>
+            <li class="value">3</li>
+          </ul>
+        </div>
+        <ul class="db-bottom">
+          <li class="prev">上一页</li>
+          <li class="go-page">前往第
+            <label><input type="text" placeholder="1">页</label>
+          </li>
+          <li class="next">下一页</li>
+        </ul>
+      </div></li>
+    <li class="subPage">
+      <div class="title">店铺管理</div>
+      <ul class="ops">
+        <li class="btn flash">刷新</li>
+        <li class="btn add">新增</li>
+        <li class="btn delete">删除</li>
+        <li class="btn patch">AppSecret修改</li>
+      </ul>
+      <!-- 待接单的数据表 -->
+      <div class="db">
+        <ul class="db-head">
+          <li class="all-check" title="是否全选"><label><input type="checkbox" disabled></label></li>
+          <li class="key">AppId</li>
+          <li class="key">AppSecret</li>
+          <li class="key">店铺名</li>
+          <li class="key">过期时间</li>
+          <li class="key">供应商平台</li>
+        </ul>
+        <div class="db-body">
+          <ul class="db-tr">
+            <li class="check"><label><input type="checkbox"></label></li>
+            <li class="value">1</li>
+            <li class="value">2</li>
+            <li class="value">3</li>
+          </ul>
+        </div>
+      </div></li>
+    <li class="subPage">
+      <div class="title">系统日志</div>
+      <ul class="ops">
+        <li class="btn flash">刷新</li>
+        <li class="btn read">查看</li>
+        <li class="btn delete">删除</li>
+      </ul>
+      <!-- 待接单的数据表 -->
+      <div class="db">
+        <ul class="db-head">
+          <li class="all-check" title="是否全选"><label><input type="checkbox" disabled></label></li>
+          <li class="key">事件类型</li>
+          <li class="key">发生时间</li>
+          <li class="key">操作者</li>
+          <li class="key">事件内容</li>
+        </ul>
+        <div class="db-body">
+          <ul class="db-tr">
+            <li class="check"><label><input type="checkbox"></label></li>
+            <li class="value">1</li>
+            <li class="value">2</li>
+            <li class="value">3</li>
+          </ul>
+        </div>
+        <ul class="db-bottom">
+          <li class="prev">上一页</li>
+          <li class="go-page">前往第
+            <label><input type="text" placeholder="1">页</label>
+          </li>
+          <li class="next">下一页</li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</article>
+<!-- 底部 -->
+<div class="bottom">
+</div>
+
+
+</body>
+</html>

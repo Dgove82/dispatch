@@ -1,0 +1,105 @@
+.modal{
+    display: none;
+    position: fixed;
+    top: 0;
+    z-index: 99999;
+    width: 100%;
+    height: 100%;
+    background-color: #a5a5cc94;
+}
+.modal .dialog{
+    position: absolute;
+    left: 30%;
+    top: 80px;
+    display: flex;
+    width: 470px;
+    max-width: 470px;
+    min-height: 100px;
+    background-color: #dedfe0;
+    border-radius: 15px 15px 0 10%;
+    flex-direction: column;
+    padding-bottom: 15px;
+    border: 2px grey solid;
+}
+.modal .dialog .head{
+    background-color: transparent;
+    height: 25px;
+    border-radius: 12px 12px 0 0;
+}
+.modal .dialog .head:hover{
+    background-color: #b6b6b670;
+    cursor: move;
+}
+.modal .dialog .head .cancel{
+    width: 30px;
+    height: 30px;
+}
+.modal .dialog .head .cancel .icon{
+    position: relative;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.modal .dialog .body .title{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color:rgb(255 255 255 / 82%);
+    text-shadow: 0 0 7px rgb(40 36 36 / 76%);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px dashed rgb(40 36 36 / 76%)
+}
+.modal .dialog  .body .content{
+    display: flex;
+    flex-direction: column;
+    margin: 10px auto;
+    text-align: center;
+
+}
+.modal .dialog .body .content .tt{
+    color: rgb(104 96 96 / 82%);
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.modal .dialog .bottom .btn{
+    margin: 15px auto;
+    background-color: #737373;
+    color: white;
+    width: 50px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+.modal .dialog .bottom .btn:hover{
+    background-color: #7373734f;
+}
+
+.modal .dialog .body .content .tt select{
+    margin-left: 10px;
+    text-decoration: none;
+    border: none;
+    height: 25px;
+    border-radius: 10px;
+    min-width: 50px;
+    line-height: 30px;
+    font-size: 20px;
+    color: rgb(104 96 96 / 82%);
+}
+.modal .dialog .body .content .tt input{
+    margin-left: 10px;
+    text-decoration: none;
+    border: none;
+    height: 25px;
+    border-radius: 10px;
+    min-width: 50px;
+    line-height: 30px;
+    font-size: 20px;
+    color: rgb(104 96 96 / 82%);
+    padding-left: 10px;
+}

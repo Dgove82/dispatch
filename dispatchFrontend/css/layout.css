@@ -1,0 +1,28 @@
+* {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+a{
+    text-decoration: none;
+    color: white;
+    display: block;
+}
+
+body {
+    background-color: #E5E6EAFF;
+}
+
+
+/* 内容编辑区 */
+article {
+    position: relative;
+    top: 64px;
+    width: 100%;
+    margin-bottom: 150px;
+}
+
+
+
+

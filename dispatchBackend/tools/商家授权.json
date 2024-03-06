@@ -1,0 +1,17 @@
+{
+  "IsSuccess": true,
+  "Error_Code": 0,
+  "Error_Msg": "",
+  "Data": {
+    "FromPlatform": "TbAlds",
+    "UserId": 2215633822127,
+    "UserNick": "合从云计算",
+    "TaobaoUserId": 2215633822127,
+    "TaobaoUserNick": "合从云计算",
+    "ExpiresIn": 4517689,
+    "DeadLine": "2024-02-29 00:00:00",
+    "Token": "TbAldsxsdcvfdfywd3dsvyfb578at2a5za2arv77mvva97wb5g"
+  },
+  "SuccessCount": 0,
+  "FailedCount": 0
+}

@@ -1,0 +1,98 @@
+.subPage{
+    position: relative;
+    top: 30px;
+    text-align: center;
+    display: none;
+}
+.subPage .title{
+    background-color: #fff;
+    width: 80%;
+    margin: 10px 10%;
+    font-size: 30px;
+    line-height: 100px;
+    letter-spacing: 30px;
+    border-radius: 30px;
+}
+.subPage .infoBox{
+    margin: 10px 10%;
+    border-radius: 30px;
+    width: 80%;
+    background-color: #cdddd9;
+    text-align: center;
+    padding: 20px 0 20px 0;
+}
+.subPage .infoBox .line{
+    margin: 0 30px 10px 30px;
+    padding: 5px 0 5px 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    color: #87888e;
+}
+.subPage .infoBox .line .value{
+    display: inline-block;
+    min-width: 160px;
+    max-height: 23px;
+    margin-left: 10px;
+    padding: 0 15px;
+    background-color:#d1d1d1d9;
+}
+.subPage .infoBox .line input{
+    min-width: 160px;
+    height: 20px;
+    background-color: #fff;
+    padding: 3px;
+    margin-left: 10px;
+    border: 2px solid #d1d1d1d9;
+}
+.subPage .infoBox .line .tt{
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+}
+.subPage .settles .submit{
+    cursor: pointer;
+    width: 70px;
+    margin: auto;
+    background-color: rgb(145 199 182 / 90%);
+    padding: 2px 0;
+    border-radius: 5px;
+
+}
+.subPage .settles .submit:hover{
+    background-color: rgb(169 241 219 / 86%);
+    color: black;
+}
+
+.subPage .ops{
+    width: 80%;
+    margin: 10px 10%;
+    font-size: 16px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.subPage .ops .btn{
+    padding: 3px;
+    background-color: #3b69da;
+    border: 1px solid white;
+    color: white;
+    border-radius: 3px;
+    margin-right: 3px;
+}
+
+.subPage .ops .btn:hover{
+    background-color: #f0561f;
+    cursor: pointer;
+}
+
+.db-bottom .prev, .db-bottom .next{
+    cursor: pointer;
+    width: 50%;
+    background-color: #3b69da;
+    margin: auto;
+    color: #ffffff;
+    border-radius: 5px;
+}
+.db-bottom .prev:hover, .db-bottom .next:hover{
+    background-color: #f0561f;
+}

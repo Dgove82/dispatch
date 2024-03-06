@@ -1,0 +1,156 @@
+/* 基础操作型数据表格 */
+.db{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: 10px 10% 0 10%;
+    background-color: #fff;
+    border-radius: 20px 20px 20px 20px;
+}
+.db ul{
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+}
+.db ul li{
+    flex: 1;
+    border-bottom: solid 2px #E5E6EAFF;
+    border-left: solid 2px #E5E6EAFF;
+}
+.db .db-head{
+    font-size: 20px;
+}
+.db .db-head li{
+    height: 50px;
+}
+.db .db-head .all-check{
+    flex: 0;
+    padding: 0 10px 0 10px;
+    line-height: 40px;
+    border-top: solid 2px #E5E6EAFF;
+}
+.db .db-head .key{
+    padding: 10px;
+    line-height: 25px;
+    font-weight: bold;
+    border-top: solid 2px #E5E6EAFF;
+    overflow: hidden;
+}
+.db .db-head .key:hover{
+    overflow: auto;
+}
+.db .db-body{
+    font-size: 20px;
+}
+.db .db-body li{
+    font-size: 20px;
+    line-height: 38px;
+    overflow: hidden;
+    height: 40px;
+}
+.db .db-body li:hover{
+    overflow: auto;
+}
+.db .db-body .check{
+    flex: 0;
+    padding: 0 23px 0 10px;
+}
+.db .db-body .check:hover{
+    overflow: hidden;
+}
+.db .db-body .update,.db .db-body .del{
+    flex: 0.5;
+}
+.db .db-body .del{
+    display: flex;
+    border-left: none;
+    justify-content: space-between;
+}
+.db .db-body .del .line{
+    flex: 0;
+    border-left:solid 2px #E5E6EAFF;
+}
+.db .db-body .del .content{
+    flex: 1;
+}
+.db-tr .value .sBox{
+    background-color: #3b69da;
+    border-radius: 3px;
+    color: white;
+    height: 28px;
+    width: 60px;
+    margin: 5px auto;
+    line-height: 28px;
+    font-size: 13px;
+}
+.db .db-bottom{
+    display: flex;
+    font-size: 17px;
+    line-height: 30px;
+}
+.db .db-bottom li{
+    border-top: solid 1px #E5E6EAFF;
+}
+.db .db-bottom input{
+    max-width: 30px;
+    text-align: center;
+    margin: 0 5px 3px 0;
+
+}
+/* 简单呈现型数据表格 */
+.db-easy{
+    display: flex;
+    flex-direction: column;
+    margin: 10px 10% 0 10%;
+    background-color: #fff;
+    text-align: center;
+}
+.db-easy ul{
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+}
+.db-easy ul li{
+    flex: 1;
+    border-bottom: solid 2px #E5E6EAFF;
+    border-left: solid 2px #E5E6EAFF;
+    overflow: auto;
+}
+.db-easy .db-head{
+    font-size: 20px;
+}
+.db-easy .db-head li{
+    height: 50px;
+}
+.db-easy .db-head .key{
+    padding: 10px;
+    line-height: 25px;
+    font-weight: bold;
+    border-top: solid 2px #E5E6EAFF;
+    overflow: hidden;
+}
+.db-easy .db-head .key:hover{
+    overflow: auto;
+}
+.db-easy .db-body li{
+    font-size: 20px;
+    line-height: 38px;
+    overflow: hidden;
+    height: 40px;
+}
+.db-easy .db-body li:hover{
+    overflow: auto;
+}
+.db-easy .db-bottom{
+    display: flex;
+    font-size: 17px;
+    line-height: 30px;
+}
+.db-easy .db-bottom li{
+    border-top: solid 1px #E5E6EAFF;
+}
+.db-easy .db-bottom input{
+    max-width: 30px;
+    text-align: center;
+    margin: 0 5px 3px 0;
+}

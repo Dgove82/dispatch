@@ -1,0 +1,64 @@
+.active-option {
+    display: block !important;
+}
+.navBox {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    max-width: 2560px;
+    align-items: center;
+    background-color: rgb(60, 108, 227);
+}
+
+.navBar {
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+}
+
+.navBar .option {
+    flex: 1;
+    text-align: center;
+    background-color: transparent;
+    transition: 0.5s;
+
+}
+
+.navBar .option:hover {
+    background-color: #05d9e638;
+    cursor: pointer;
+    border-radius: 10px 10px 0 0;
+}
+
+.navBar .option .name {
+    line-height: 64px;
+    padding: 0 10px;
+    color: white;
+}
+
+.navBar .option .subTabs {
+    display: none;
+    position: relative;
+    background-color: #bedce699;
+    border-radius: 0 0 5px 20px;
+}
+
+.navBar .option .subTabs .subOption {
+    padding: 7px 0 5px 0;
+    border-bottom: 1px rgba(161, 160, 160, 0.51) dashed;
+}
+
+.navBar .option .subTabs .subOption:hover {
+    background-color: #3182e2ad;
+    border-bottom: 1px transparent dashed;
+}
+
+.navBar .option .subTabs .subOption:last-child {
+    border: none;
+    border-radius: 0 0 5px 20px;
+}
