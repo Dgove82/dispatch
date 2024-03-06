@@ -35,7 +35,16 @@
    python dispatchBackend/manage.py runserver
    ```
 
-5. 配置uwsgi(本地部署略)
+5. 启动定时任务（linux）
+
+   ```bash
+   python dispatchBackend/manage.py crontab add
+   
+   # 移除定时任务
+   # python dispatchBackend/manage.py crontab remove
+   ```
+
+6. 配置uwsgi(本地部署略)
 
    ```bash
    python dispatchBackend/manage.py uwsgi
@@ -43,7 +52,7 @@
 
    按需修改`dispatchBackend/uwsgi.ini`的参数值
 
-6. 配置nginx(本地部署略)
+7. 配置nginx(本地部署略)
 
    参考配置（`/etc/nginx/sites-available/default`）
 
