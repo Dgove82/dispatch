@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 class User(models.Model):
     class Meta:
-        db_table = 'user'
+        db_table = 'users'
         verbose_name = '用户'
 
     objects = models.Manager()
@@ -22,8 +22,9 @@ class User(models.Model):
 
 class Shop(models.Model):
     class Meta:
-        db_table = 'shop'
+        db_table = 'shops'
         verbose_name = '店铺'
+
     objects = models.Manager()
     name = models.CharField(max_length=30, verbose_name='店铺名UserNick', null=True, default=None)
     token = models.CharField(max_length=255, verbose_name='acess_token', null=True, default=None)
@@ -35,7 +36,7 @@ class Shop(models.Model):
 
 class Order(models.Model):
     class Meta:
-        db_table = 'order'
+        db_table = 'orders'
         verbose_name = '订单'
 
     objects = models.Manager()
@@ -48,17 +49,20 @@ class Order(models.Model):
     updateTime = models.DateTimeField(verbose_name='更新时间', null=True)
     buyer = models.CharField(max_length=100, verbose_name='旺旺名')
     buyerid = models.CharField(max_length=30, verbose_name='淘宝id')
-    status = models.IntegerField(choices=((0, '待接单'), (1, '进行中'), (2, '待验收'), (3, '已完成'), (4, '已取消')), default=0,
-                                 verbose_name='订单状态')
-    tbstatus = models.IntegerField(choices=((0, '待发货'), (1, '已发货'), (2, '已退款'), (3, '退款中')), default=0,
-                                   verbose_name='淘宝状态')
+    status = models.IntegerField(
+        choices=((0, '待接单'), (1, '进行中'), (2, '待验收'), (3, '已完成'), (4, '退款处理'), (5, '冻结中')),
+        default=0, verbose_name='订单状态')
+    tbstatus = models.IntegerField(
+        choices=((0, '待发货'), (1, '已发货'), (2, '已退款'), (3, '退款中'), (4, '交易成功'), (5, '其他')), default=0,
+        verbose_name='淘宝状态')
     shopId = models.ForeignKey(to=Shop, verbose_name='供应商平台', on_delete=models.SET_NULL, null=True)
 
 
 class Bill(models.Model):
     class Meta:
-        db_table = 'bill'
+        db_table = 'bills'
         verbose_name = '账单'
+
     objects = models.Manager()
     user = models.ForeignKey(to=User, verbose_name='接单人员', on_delete=models.SET_NULL, null=True)
     order = models.ForeignKey(to=Order, verbose_name="收支来源", on_delete=models.SET_NULL, null=True)
@@ -72,6 +76,7 @@ class CashOut(models.Model):
     class Meta:
         db_table = 'cash_out'
         verbose_name = '提现审批'
+
     objects = models.Manager()
     user = models.ForeignKey(to=User, verbose_name='接单人员', on_delete=models.SET_NULL, null=True)
     amount = models.DecimalField(max_digits=7, decimal_places=2, default=0.0, verbose_name='提现数额', null=True)
@@ -83,9 +88,9 @@ class Logs(models.Model):
     class Meta:
         db_table = 'logs'
         verbose_name = '日志'
+
     objects = models.Manager()
     tag = models.CharField(max_length=30, verbose_name='事件类型', db_index=True)
     happenTime = models.DateTimeField(auto_now_add=True, verbose_name='发生时间')
     target = models.CharField(max_length=30, verbose_name='事情发生对象', null=True, blank=True)
     things = models.TextField(verbose_name='事件内容', null=True, blank=True)
-

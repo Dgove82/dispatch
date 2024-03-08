@@ -60,9 +60,24 @@ class SearchBox{
                 wait: ()=>{},
             }
             const result = await new Order().get(params)
+            // console.log(result)
             if (result) {
                 searchResult.style.opacity = '100%'
                 this.searchResultShow(result)
+                if(!result.user && Number(result.status) < 3) {
+                    const getOrder = o('.getOrder')
+                    getOrder.style.display = 'flex'
+                    getOrder.addEventListener('click', async()=>{
+                        const data ={
+                            order: result.id,
+                            uid: getUid('token'),
+                        }
+                        const value = await new Order().patch({data})
+                        if (value) alert('成功获得此单')
+                        else alert('error')
+                    })
+
+                }
                 this.modal.close()
             } else{
                 alert('并无此订单')
@@ -82,10 +97,10 @@ class SearchBox{
                 <div class="item">${data.refundfee}</div>
                 <div class="item">${data.item}</div>
                 <div class="item">${data.createTime.replace('T', ' ')}</div>
-                <div class="item">${data.updateTime.replace('T', ' ')}</div>
+                <div class="item">${data.updateTime? data.updateTime.replace('T', ' ') : null}</div>
                 <div class="item">${data.buyer}</div>
                 <div class="item">${data.buyerid}</div>
-                <div class="item">${['待接单', '进行中', '待验收', '已完成', '已取消'][data.status]}</div>
-                <div class="item">${['待发货', '已发货', '已退款', '退款中'][data.tbstatus]}</div>`
+                <div class="item">${['待接单', '进行中', '待验收', '已完成', '冻结中'][data.status]}</div>
+                <div class="item">${['待发货', '已发货', '已退款', '退款中', '交易成功', '其他'][data.tbstatus]}</div>`
     }
 }

@@ -371,12 +371,12 @@ class ShopOpView {
         html += `<li class="value">${e.appid ? e.appid : `<div class="tipBox">待补充</div>`}</li>
                   <li class="value">${e.secret ? `<div class="tipBox" style="background-color: #A1DA3BFF;">已填充</div>` : `<div class="tipBox">待补充</div>`}</li>`
         if (!e.name) {
-            html += `<li class="value" style="flex:3;padding-left:4px; "><div class="tipBox empower">授权</div></li>`
+            html += `<li class="value" style="flex:3;padding-left:4px; "><div class="tipBox empower">授权</div></li></ul>`
         } else {
             html += `<li class="value">${e.name}</li>
                     <li class="value">${e.deadline.replace('T', ' ')}</li>
                     <li class="value">${e.platform}</li>
-                </ul>`
+                    </ul>`
         }
         return html
     }
@@ -438,7 +438,7 @@ class ShopOpView {
                 }
                 const result = await new Shops().patch({data})
                 if (result) {
-                    console.log(result)
+                    // console.log(result)
                     alert('修改成功')
                     this.modal.close()
                     await this.shopDbShow()

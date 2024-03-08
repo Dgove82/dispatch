@@ -25,7 +25,7 @@ const navBar = () => {
                 <div class="name">订单管理</div>
                 <ul class="subTabs">
                   <li class="subOption" data-tab="orders.html#0">接单大厅</li>`
-    html += isAdmin() ? `` : `<li class="subOption" data-tab="orders.html#1">我的订单</li>`
+    html += isAdmin() ? `<li class="subOption" data-tab="orders.html#1">我的订单</li>` : `<li class="subOption" data-tab="orders.html#1">我的订单</li>`
     html += isAdmin() ? `<li class="subOption" data-tab="orders.html#2">订单管理</li>` : ``
     html += `</ul>
               </li>

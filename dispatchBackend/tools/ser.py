@@ -41,6 +41,7 @@ class UpdateUserSerializer(UserSerializer):
 
 class ShopSerializer(serializers.ModelSerializer):
     appid = serializers.CharField(required=False)
+    secret = serializers.CharField(required=False)
 
     class Meta:
         model = models.Shop

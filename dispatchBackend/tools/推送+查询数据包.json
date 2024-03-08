@@ -117,3 +117,17 @@
 'BuyerNick': 'l**', 'BuyerOpenUid': 'AAHK_gqxAAShiml5geqUGjyn',
 'Payment': '1.00', 'Type': 'guarantee_trade', 'createTime': '1704984176'}
 [11/Jan/2024 22: 42: 55] "POST /push/receiveMsg/?timestamp=1704984176&sign=7917D99DAF775EFE29BC2F0C7F667156&aopic=2097152&fromPlatform=TbAlds HTTP/1.1" 200 39
+
+
+部分退款数据包分析
+推送类别256,数据包{'Platform': 'TAOBAO', 'PlatformUserId': '2215633822127',
+'Tid': 3805259871886515001, 'TidStr': '3805259871886515001', 'Oid': 3805259871886515001,
+'OidStr': '3805259871886515001', 'RefundId': 265076786038510150, 'RefundIdStr': '265076786038510150',
+'SellerNick': '合从云计算', 'BuyerNick': '5**', 'BuyerOpenUid': 'AAG6_gqxAAShiml5geoT0xqB',
+'RefundFee': '0.50', 'RefundPhase': 'onsale', 'BillType': 'refund_bill',
+'Modified': '2024-03-08 00:01:59', 'createTime': '1709827319'}
+
+推送类别65536,数据包{'Platform': 'TAOBAO', 'PlatformUserId': '2215633822127', 'Tid': 3805259871886515001, 'TidStr': '3805259871886515001', 'Oid': 3805259871886515001, 'OidStr': '3805259871886515001', 'RefundId': 265076786038510150, 'RefundIdStr': '265076786038510150', 'SellerNick': '合从云计算', 'BuyerNick': '5**', 'BuyerOpenUid': 'AAG6_gqxAAShiml5geoT0xqB', 'RefundFee': '0.50', 'RefundPhase': 'onsale', 'BillType': 'refund_bill', 'Modified': '2024-03-08 00:02:24', 'createTime': '1709827345'}
+推送类别256,数据包{'Platform': 'TAOBAO', 'PlatformUserId': '2215633822127', 'Tid': 3805259871886515001, 'TidStr': '3805259871886515001', 'Oid': 3805259871886515001, 'OidStr': '3805259871886515001', 'RefundId': 265070415475510150, 'RefundIdStr': '265070415475510150', 'SellerNick': '合从云计算', 'BuyerNick': '5**', 'BuyerOpenUid': 'AAG6_gqxAAShiml5geoT0xqB', 'RefundFee': '0.47', 'RefundPhase': 'onsale', 'BillType': 'refund_bill', 'Modified': '2024-03-08 00:03:25', 'createTime': '1709827406'}
+推送类别65536,数据包{'Platform': 'TAOBAO', 'PlatformUserId': '2215633822127', 'Tid': 3805259871886515001, 'TidStr': '3805259871886515001', 'Oid': 3805259871886515001, 'OidStr': '3805259871886515001', 'RefundId': 265070415475510150, 'RefundIdStr': '265070415475510150', 'SellerNick': '合从云计算', 'BuyerNick': '5**', 'BuyerOpenUid': 'AAG6_gqxAAShiml5geoT0xqB', 'RefundFee': '0.47', 'RefundPhase': 'onsale', 'BillType': 'refund_bill', 'Modified': '2024-03-08 00:03:50', 'createTime': '1709827432'}
+

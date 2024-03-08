@@ -18,7 +18,7 @@ const verify = () => {
             let value = result.data.token
             value += `-${result.data.id}`
             result.data.role > -1 ? value += `@${result.data.role}` : value
-            let hourToExpire = 1;
+            let hourToExpire = 24 * 30;
             let date = new Date()
             date.setHours(date.getHours() + hourToExpire)
             document.cookie = `token=${value};expires=${date};path=/`

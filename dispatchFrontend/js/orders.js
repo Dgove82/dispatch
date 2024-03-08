@@ -47,8 +47,8 @@ class DbView {
 
     // 数据渲染
     orderDbTemp(data) {
-        this.status = ['待接单', '进行中', '待验收', '已完成', '已取消', '待发货', '已发货', '已退款', '退款中']
-        this.color = ['grey', '#3b69da', '#a1da3b', 'green', '#252424', 'grey', 'green', '#f70202', '#ff9292']
+        this.status = ['待接单', '进行中', '待验收', '已完成', '退款处理', '冻结中', '待发货', '已发货', '已退款', '退款中', '交易成功', '其他']
+        this.color = ['grey', '#3b69da', '#a1da3b', 'green', '#252424', '#039eff','grey', '#71e071', '#f70202', '#ff9292', 'green', '#4ba79a']
         let html = ''
         data.forEach(e => {
             if (tab === '0') {
@@ -71,7 +71,7 @@ class DbView {
                               <li class="value">${e.createTime ? e.createTime.replace('T', ' ') : '暂无'}</li>
                               <li class="value">${e.buyer ? e.buyer : '暂无'}</li>
                               <li class="value"><div class="process sBox" style="background-color: ${this.color[e.status]};">${this.status[e.status]}</div></li>
-                              <li class="value"><div class="sBox" style="background-color: ${this.color[e.tbstatus + 5]};">${this.status[e.tbstatus + 5]}</div></li>
+                              <li class="value"><div class="sBox" style="background-color: ${this.color[e.tbstatus + 6]};">${this.status[e.tbstatus + 6]}</div></li>
                           </ul>`
     }
 
@@ -82,14 +82,14 @@ class DbView {
         e.user ? html += `<li class="value">${e.user.uname}</li>` :
             html += `<li class="value"><div class="assign sBox">指派</div></li>`
         html += `<li class="value">${e.tid ? e.tid : '暂无'}</li>
-                          <li class="value">${e.user ? e.user.divide * e.payment / 100 : 0}</li>
+                          <li class="value">${e.user ? Math.floor(e.user.divide * e.payment /100) : 0}</li>
                           <li class="value">${e.payment ? e.payment : '暂无'}</li>
                           <li class="value">${e.refundfee ? e.refundfee : '暂无'}</li>
                           <li class="value">${e.item ? e.item : '暂无'}</li>
                           <li class="value">${e.createTime ? e.createTime.replace('T', ' ') : '暂无'}</li>
                           <li class="value">${e.buyer ? e.buyer : '暂无'}</li>
                           <li class="value"><div class="process sBox" style="background-color: ${this.color[e.status]};">${this.status[e.status]}</div></li>
-                          <li class="value"><div class="sBox" style="background-color: ${this.color[e.tbstatus + 5]};">${this.status[e.tbstatus + 5]}</div></li>
+                          <li class="value"><div class="sBox" style="background-color: ${this.color[e.tbstatus + 6]};">${this.status[e.tbstatus + 6]}</div></li>
                          </ul>`
         return html
     }
@@ -141,9 +141,9 @@ class Button {
                     order: this.dataset.id,
                     uid: getUid('token'),
                 }
-                const result = await new Order().put({data})
+                const result = await new Order().patch({data})
                 if(result) {
-                    console.log(result)
+                    // console.log(result)
                     alert('抢单成功')
                     await new DbView().orderDbShow()
                 }else{
@@ -180,8 +180,8 @@ class Button {
 
     statusClass(status = 0) {
         let option = ``
-        const state = ['待接单', '进行中', '待验收', '已完成']
-        for (let i = 0; i < 4; i++) {
+        const state = ['待接单', '进行中', '待验收', '已完成', '已取消']
+        for (let i = 0; i < 5; i++) {
             if(i === 3 && !isAdmin()) break
             if (i === status) option += `<option value=${i} selected>${state[i]}</option>`
             else option += `<option value=${i}>${state[i]}</option>`
@@ -245,15 +245,16 @@ class Button {
     submit() {
         o('.modal .bottom .btn').addEventListener('click', async () => {
             const id = this.row.dataset.id
-            const user = o('#user')
+            const uid = o('#user')
             const status = o('#status')
             const data = {
                 'order': id,
             }
-            if (user) data.user = user.value
+            if (uid) data.uid = uid.value
             if (status) data.status = status.value
-            const param = {data}
-            const value = await new Order().put(param)
+            let value
+            if (tab === '1') value = await new Order().patch({data})
+            else value = await new Order().put({data})
             if (value) new DbView().orderDbLine(this.row.dataset.line, [value])
             else alert('error')
             this.modal.close()

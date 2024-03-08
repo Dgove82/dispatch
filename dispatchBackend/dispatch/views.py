@@ -29,7 +29,7 @@ class LoginView(APIView):
             return Response({'code': 1002, 'msg': '用户名或密码错误'})
         payload = {'username': username}
         dg = Dgove()
-        token = dg.encode(settings.KEY, payload, exp=3600)
+        token = dg.encode(settings.KEY, payload, exp=3600 * 24 * 30)
         data = {'token': token}
         if user.role == 0:
             data["role"] = 0
@@ -39,7 +39,7 @@ class LoginView(APIView):
 
 
 class BillView(APIView):
-    authentication_classes = [UserAuthentication,]
+    authentication_classes = [UserAuthentication, ]
 
     @staticmethod
     def paging_item(item, page=0, page_size=10):
@@ -151,9 +151,9 @@ class UserView(APIView):
                 target["password"] = Dgove.md5(request.data["password"])
             ser.update(instance=user, validated_data=target)
             ser = UserSerializer(instance=user)
-            Log(things=f'修改了用户{ser.data.username}的信息', target=request.user.username).update()
+            Log(things=f'修改了用户{user.username}的信息', target=request.user.username).update()
             return Response({'code': 200, 'msg': f'{user.username}信息更新成功', 'data': ser.data})
-        Log(things=f'修改用户{ser.data.username}的信息失败', target=request.user.username).error()
+        Log(things=f'修改用户{user.username}的信息失败', target=request.user.username).error()
         return Response({'code': 1007, 'msg': '更新失败', "error": ser.errors})
 
     def delete(self, request):
@@ -229,8 +229,10 @@ class ShopView(APIView):
             if not is_admin(user):
                 return Response({'code': 1201, 'msg': '权限不足'})
             shops = models.Shop.objects.all()
+            if not shops:
+                return Response({'code': 1202, 'msg': '暂无店铺'})
             ser = ShopSerializer(instance=shops, many=True)
-            Log(things=f'查询了所有店铺', target=request.user.username).info()
+            Log(things=f'查询了所有店铺', target=user.username).info()
             return Response({'code': 200, 'msg': '拉取成功', 'data': ser.data})
         state = request.query_params.get('state')
         shop = models.Shop.objects.filter(id=state).first()
@@ -239,12 +241,12 @@ class ShopView(APIView):
         # 暂未测试
         ser = ShopSerializer(instance=shop, data=data)
         if ser.is_valid():
-            Log(things=f'店铺{ser.data.name}被授权使用了', target=request.user.username).add()
+            Log(things=f'店铺{shop.appid}被授权使用了').sys()
             ser.save()
             return HttpResponseRedirect(settings.WEB)
             # return Response({'code': 200, 'msg': '授权成功'})
         print(f'授权数据存储失败{ser.errors}')
-        return Response({'code': 1202, 'msg': '数据错误'})
+        return Response({'code': 1203, 'msg': '数据错误'})
         # return HttpResponseRedirect('https://baidu.com')
 
     def post(self, request):
@@ -256,12 +258,12 @@ class ShopView(APIView):
         ser = ShopSerializer(data=request.data)
         if ser.is_valid():
             ser.save()
-            Log(things=f'店铺{ser.data.name}被新增了', target=request.user.username).add()
+            Log(things=f'店铺{request.data["appid"]}被新增了', target=user.username).add()
             return Response({'code': 200, 'msg': '添加成功', 'data': ser.data})
         Log(things=f'店铺新增失败', target=request.user.username).error()
-        return Response({'code': 1208, 'msg': '添加失败'})
+        return Response({'code': 1204, 'msg': '添加失败'})
 
-    def patch(self,request):
+    def patch(self, request):
         user = get_user(request)
         if isinstance(user, dict):
             return Response(user)
@@ -270,14 +272,14 @@ class ShopView(APIView):
         shop_id = request.data.get('shop_id')
         shop = models.Shop.objects.filter(id=shop_id).first()
         if not shop:
-            return Response({'code': 1206, 'msg': '无此店铺授权'})
+            return Response({'code': 1205, 'msg': '无此店铺授权'})
         ser = ShopSerializer(instance=shop, data=request.data)
         if ser.is_valid():
             ser.save()
-            Log(things=f'店铺{ser.data.name}信息修改成功', target=request.user.username).update()
+            Log(things=f'店铺{shop.appid}信息修改成功', target=user.username).update()
             return Response({'code': 200, 'msg': '修改成功', 'data': ser.data})
-        Log(things=f'店铺{ser.data.name}信息修改失败', target=request.user.username).error()
-        return Response({'code': 1207, 'msg': '修改失败,{}'.format(ser.errors)})
+        Log(things=f'店铺{shop.name}息修改失败', target=user.username).error()
+        return Response({'code': 1206, 'msg': '修改失败,{}'.format(ser.errors)})
 
     def delete(self, request):
         user = get_user(request)
@@ -287,12 +289,12 @@ class ShopView(APIView):
             return Response({'code': 1203, 'msg': '权限不足'})
         shop_id = request.data.get('shopId')
         if not shop_id:
-            return Response({'code': 1205, 'msg': '缺少参数'})
+            return Response({'code': 1207, 'msg': '缺少参数'})
         shop = models.Shop.objects.get(id=shop_id)
         if not shop:
-            return Response({'code': 1206, 'msg': '无此店铺授权'})
+            return Response({'code': 1208, 'msg': '无此店铺授权'})
         ser = ShopSerializer(instance=shop, many=False)
-        Log(things=f'店铺{shop.name}被移除了', target=request.user.username).delete()
+        Log(things=f'店铺{shop.name}被移除了', target=user.username).delete()
         shop.delete()
         return Response({'code': 200, 'msg': '删除成功', "data": ser.data})
 
@@ -349,6 +351,8 @@ class OrderView(APIView):
         order = self.handle_get_order(order_id, tid, user_id, seller)
         if not order:
             return Response({'code': 200, 'msg': '暂无订单', 'data': None})
+        elif isinstance(order, dict):
+            return Response(order)
         elif isinstance(order, models.Order):
             ser = OrderSerializer(many=False, instance=order)
             return Response({'code': 200, 'msg': '查询成功', 'data': ser.data})
@@ -363,10 +367,8 @@ class OrderView(APIView):
             return Response({'code': 200, 'msg': '查询成功', 'data': ser.data, 'ps': ps})
 
     def put(self, request):
-        # self.permission_classes = [AdminPermission, ]
-        # self.check_permissions(request)
         order_id = request.data.get('order')
-        user_id = request.data.get('user')
+        user_id = request.data.get('uid')
         status = request.data.get('status')
         if not order_id and (not user_id or not status):
             return Response({'code': 1203, 'msg': '缺少参数'})
@@ -375,10 +377,15 @@ class OrderView(APIView):
             return Response({'code': 1204, 'msg': f'无对应订单'})
         if user_id:
             order.user_id = user_id
+            # order.status = '1' if order.status == 0 else order.status
             user = models.User.objects.filter(id=user_id).first()
+            Log(things=f'订单被指派给{user.uname}', target=request.user.username).update()
         else:
             user = order.user
         if status:
+            if status == '0':
+                Log(things=f'订单{order.tid}被放回接单大厅', target=request.user.username).update()
+                order.user_id = None
             if status == '3' and order.status != 3:
                 Log(things=f'订单{order.tid}结算成功', target=request.user.username).notice()
                 Wallet(user=user, source=order, notes='订单结算(+)').income()
@@ -393,15 +400,6 @@ class OrderView(APIView):
             Log(things=f'订单{order.tid}信息修改失败', target=request.user.username).error()
             return Response({'code': 1205, 'msg': f'修改异常{e}'})
         return Response({'code': 200, 'msg': '修改成功', 'data': OrderSerializer(instance=order).data})
-        # 序列化保存方式 见下 - 需要用get获取order
-        # ser = OrderSerializer(instance=order, data={'user': user_id, 'status': status}, partial=True)
-        # if not ser.is_valid():
-        #     return Response({'code': 1205, 'msg': f'数据验证失败,{ser.errors}'})
-        # try:
-        #     ser.save()
-        # except Exception as e:
-        #     return Response({'code': 1205, 'msg': f'修改异常{e}'})
-        # return Response({'code': 200, 'msg': '修改成功', 'data': OrderSerializer(instance=ser.instance).data})
 
     # 仅修改订单状态
     def patch(self, request):
@@ -413,18 +411,24 @@ class OrderView(APIView):
         order = models.Order.objects.filter(id=o_id).first()
         if not order:
             return Response({'code': 1204, 'msg': f'无对应订单'})
-        if not status and user_id and not order.user_id:
+        if status and order.user == request.user:
+            if status == '0':
+                Log(things=f'订单{order.tid}被用户{order.user.uname}放弃', target=request.user.username).update()
+                order.user_id = None
+                order.status = status
+            elif status in ['1', '2']:
+                order.status = status
+                Log(things=f'订单{order.tid}的状态被更新了', target=request.user.username).update()
+            else:
+                Log(things=f'非法操作', target=request.user.username).error()
+        elif user_id and not order.user and request.user.id == int(user_id):
             order.user_id = user_id
-            order.status = '1'
-        elif status and not user_id:
-            if status == '3' and request.user.role != 0:
-                return Response({'code': 1205, 'msg': f'无权修改此状态值'})
-            order.status = status
+            order.status = '1' if order.status == 0 else order.status
         else:
-            return Response({'code': 1207, 'msg': '缺少参数或无权同时修改'})
+            Log(things=f'非法操作', target=request.user.username).error()
+            return Response({'code': 1209, 'msg': f'非法操作'})
         try:
             order.save()
-            Log(things=f'订单{order.tid}信息修改成功', target=request.user.username).update()
         except Exception as e:
             Log(things=f'订单{order.tid}信息修改失败', target=request.user.username).error()
             return Response({'code': 1208, 'msg': f'修改异常{e}'})
@@ -439,15 +443,15 @@ class AgisoView(APIView):
         sign = request.query_params.get('sign', '')
         if not sign:
             return Response({'code': 1301, 'msg': '缺少验证值'})
+        data = json.loads(data)
         shop = models.Shop.objects.filter(name=data.get('SellerNick')).first()
         if not shop:
             return Response({'code': 1309, 'msg': '无店铺订单'})
         if Agiso(secret=shop.secret).sign(params) != sign:
             return Response({'code': 1302, 'msg': '验证失败'})
-        data = json.loads(data)
         data['createTime'] = request.query_params.get('timestamp')
         msg_type = str(request.query_params.get('aopic'))
-        # print(f'推送类别{msg_type},数据包{data}')
+        print(f'推送类别{msg_type},数据包{data}')
         if msg_type == '2097152':
             # 买家付款推送
             ident = Ident(data)
@@ -479,6 +483,7 @@ class Ident:
             'refundfee': 0.0,
             'item': '',
             'createTime': '',
+            'updateTime': '',
             'buyer': '',
             'buyerid': '',
             'status': 0,
@@ -514,6 +519,24 @@ class Ident:
         self.order.updateTime = datetime.fromtimestamp(int(timestamp)).strftime('%Y-%m-%d %H:%M:%S')
         self.order.save()
 
+    def choose_status_for_taobao(self, status):
+        status_for_taobao = ['WAIT_SELLER_SEND_GOODS', 'WAIT_BUYER_CONFIRM_GOODS', 'TRADE_FINISHED', 'TRADE_CLOSED',
+                             'TRADE_CLOSED_BY_TAOBAO']
+        try:
+            index = status_for_taobao.index(status)
+            if 0 <= index < 2:
+                # 0 / 1
+                self.serializer['tbstatus'] = index
+            elif index == 2:
+                # 4
+                self.serializer['tbstatus'] = 4
+            else:
+                # 2 / 3
+                self.serializer['tbstatus'] = 2
+        except ValueError:
+            # 5
+            self.serializer['tbstatus'] = 5
+
     def ident_create(self):
         """
         订单创建-入库(订单未在本地数据库)
@@ -522,14 +545,16 @@ class Ident:
         res = self.search_ident()
         # print(f'查询数据包{res}')
         if not res:
-            # print('无效订单')
+            print('无效订单')
             return {'code': 1304, 'msg': '无效订单', 'data': res}
         self.serializer['tid'] = self.data['Tid']
-        self.serializer['buyer'] = self.data['BuyerNick']
-        self.serializer['buyerid'] = self.data['BuyerOpenUid']
+        self.serializer['buyer'] = res['Data']['BuyerNick']
+        self.serializer['buyerid'] = res['Data']['BuyerOpenUid']
         self.serializer['createTime'] = res['Data']['Created']
-        self.serializer['payment'] = self.data['Payment']
+        self.serializer['payment'] = res['Data']['Payment']
         self.serializer['item'] = res['Data']['Orders'][0]['Title']
+        self.serializer['updateTime'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        self.choose_status_for_taobao(res['Data']['Status'])
         ser = OrderSerializer(data=self.serializer)
         if ser.is_valid():
             ser.save()
@@ -594,7 +619,7 @@ class Wallet:
     # 流水保存
     def save(self):
         if isinstance(self.source, models.Order):
-            self.amount = eval(f'{self.user.divide} * {self.source.payment} / 100')
+            self.amount = eval(f'{self.user.divide} * {self.source.payment - self.source.refundfee} / 100')
             # print('收益{}'.format(self.amount))
             try:
                 models.Bill.objects.create(user=self.user, order=self.source, amount=self.amount, notes=self.notes)
@@ -663,7 +688,7 @@ class CashOutView(APIView):
             return item
 
     def get(self, request):
-        self.permission_classes = [AdminPermission,]
+        self.permission_classes = [AdminPermission, ]
         self.check_permissions(request)
         cashes = models.CashOut.objects.all().order_by('status', 'createTime')
         if not cashes:
@@ -793,4 +818,3 @@ class Log:
 
     def delete(self):
         models.Logs.objects.create(tag='del', target=self.target, things=self.things)
-

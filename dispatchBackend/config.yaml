@@ -12,12 +12,13 @@ key: 'dgove'
 # 阿奇索授权完跳转url
 web: 'http://117.72.38.81/dispatch/system.html#3'
 
+# 订单冻结期时长：用于订单的结算
+settlement_days: 15
+
 # 定时任务
 crontab:
   # 分 时 天 月 年
-  - due: '0 6 * * *'
-    task: 'dispatch.task.tbstatus_check_task'
-  - due: '0 18 * * *'
-    task: 'dispatch.task.tbstatus_check_task'
+  - due: '0 0 * * *'
+    task: 'dispatch.task.timed_task'
 
 

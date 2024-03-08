@@ -163,7 +163,7 @@ class Order {
     }
 
     async get({
-                  pageSize, page, ps, user_id, id, tid, wait = () => {
+                  sellerNick, pageSize, page, ps, user_id, id, tid, wait = () => {
         }
               } = {}) {
         if (!id) id = ''
@@ -172,6 +172,7 @@ class Order {
         if (!ps) ps = 'true'
         if (!pageSize) pageSize = 10
         if (!page) page = 0
+        if (!sellerNick) sellerNick = ''
         const result = await this.order({
             params: {
                 'token': `${getToken('token')[0]}`,
@@ -180,29 +181,34 @@ class Order {
                 'user_id': user_id,
                 'page': page,
                 'page_size': pageSize,
-                'ps': ps
+                'ps': ps,
+                'sellerNick': sellerNick,
             },
             wait: wait,
         })
         try {
             pEnd = result.ps && result.ps !== 'false' ? result.ps : pEnd
         } catch (e) {
-            console.log('无法分页')
+            console.log('无法分页 ')
         }
         return result ? result.data : undefined
     }
 
-    async put({
-                  data = {}, wait = () => {
-        }
-              }) {
-        let result
-        if (Object.keys(data).length < 3 && !isAdmin()) result = await this.order({
+    async put({data={}, wait=()=>{}}){
+        const result = await this.order({
+            method: 'PUT',
+            data: data,
+            wait: wait,
+        })
+        return result ? result.data : undefined
+    }
+
+    async patch({data={}, wait=()=>{}}){
+        const result = await this.order({
             method: 'PATCH',
             data: data,
-            wait: wait
+            wait: wait,
         })
-        else result = await this.order({method: 'PUT', data: data, wait: wait})
         return result ? result.data : undefined
     }
 

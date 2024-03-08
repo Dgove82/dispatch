@@ -246,6 +246,43 @@ article{
     background: rgb(234, 235, 234);
 }
 
+.getOrder {
+    display: none;
+    border: 1px solid #7ca4ec;
+    background-color: transparent;
+    color: #7ca4ec;
+    margin: 10px auto;
+    outline: 1px solid var(--card-color);
+    border-radius: 1rem;
+    padding: .5rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 900;
+    transition: .3s;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    gap: .2em;
+}
+
+.getOrder .arrow {
+    width: 0;
+    height: 20px;
+    fill: #7ca4ec;
+    transform: scale(0);
+    transition: .3s;
+}
+
+.getOrder:hover .arrow {
+    width: 20px;
+    margin-left: 1em;
+    transform: scale(1);
+}
+
+.getOrder:hover {
+    background-color: white;
+    color: #7ca4ec;
+    cursor: pointer;
+}
 
 
 
