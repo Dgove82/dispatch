@@ -212,6 +212,15 @@ class Order {
         return result ? result.data : undefined
     }
 
+    async delete({data={}, wait=()=>{}}){
+        const result = await this.order({
+            method: 'DELETE',
+            data:data,
+            wait:wait,
+        })
+        return result ? result.data : undefined
+    }
+
 }
 
 class Users {
@@ -266,6 +275,15 @@ class Users {
             method: 'PUT',
             data: data,
             wait: wait,
+        })
+        return result ? result.data : undefined
+    }
+
+    async delete({data={}, wait=()=>{}}){
+        const result = await this.user({
+            method: 'DELETE',
+            data:data,
+            wait:wait,
         })
         return result ? result.data : undefined
     }
@@ -474,6 +492,19 @@ class Log{
         } catch (e) {
             console.log('无法分页')
         }
+        return result ? result.data : undefined
+    }
+
+    async delete({
+                     data = {}, wait = () => {
+        }
+                 } = {}) {
+        if (!data) data = {}
+        const result = await this.log({
+            method: 'DELETE',
+            data: data,
+            wait: wait,
+        })
         return result ? result.data : undefined
     }
 

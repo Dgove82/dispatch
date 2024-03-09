@@ -1,25 +1,26 @@
-import models
-from views import Ident, Wallet, Log
 import time
 from datetime import datetime, timedelta
 from django.conf import settings
+from dispatch import models
+from dispatch.views import Ident, Wallet, Log
 
 
 def timed_task():
+    Log(things='开始今天的结算巡查').sys()
     patrol_for_order()
     settle_order()
 
 
 def settle_order():
     # 冻结中的订单进行 -> 结算
-    count_days = -settings.config['settlement_days']
+    count_days = -settings.SETTLEMENT_DAYS
     days_of_threshold = datetime.now() + timedelta(days=count_days)
-    orders = models.Order.objects.filter(status=5, updateTime__gte=days_of_threshold)
+    orders = models.Order.objects.filter(status=5, updateTime__lte=days_of_threshold)
     for order in orders:
         order.status = 3
         if order.user:
             Log(things=f'系统结算了{order.user.username}的{order.tid},结算{"存在退款" if order.refundfee > 0 else ""};'
-                       f'用户收益为{eval(order.payment - order.refundfee / 100)}').sys()
+                       f'用户收益为{eval(f"{order.payment} - {order.refundfee} / 100")}').sys()
             Wallet(user=order.user, source=order, notes='订单结算(+)').income()
         else:
             Log(things=f'订单{order.tid}未被分派，但被退款或其他情况进入已完成状态')

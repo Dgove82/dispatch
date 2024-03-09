@@ -12,22 +12,16 @@ class FinanceTab{
     async showTab() {
         switch (tab) {
             case '0':
-                const dbView = new UserBillView()
-                await dbView.billDbShow()
-                dbView.bottomShow()
+                await new UserBillView().billDbShow()
                 break
             case '1':
                 await new Wallet().walletShow()
                 break
             case '2':
-                const cashDbView = new OpCashView()
-                await cashDbView.cashesDbShow()
-                cashDbView.bottomShow()
+                await new OpCashView().cashesDbShow()
                 break
             case '3':
-                const opDbView = new OpBillView()
-                await opDbView.billsDbShow()
-                opDbView.bottomShow()
+                await new OpBillView().billsDbShow()
                 break
             default:
                 break
@@ -57,7 +51,10 @@ class UserBillView{
         }
         const data = await new Bills().get(param)
         // console.log(data)
-        if(data) dbBody.innerHTML = this.billDbTemp(data)
+        if(data) {
+            dbBody.innerHTML = this.billDbTemp(data)
+            this.bottomShow()
+        }
         else dbBody.innerHTML = `<div style="height: 50px;line-height: 50px; color: red;">暂无账单</div>`
 
     }
@@ -95,7 +92,6 @@ class UserBillView{
         o('.prev', this.foot).addEventListener('click', async () => {
             this.foot.innerHTML = ''
             await this.billDbShow(--p, 'false')
-            this.bottomShow()
         })
     }
 
@@ -103,7 +99,6 @@ class UserBillView{
         o('.next', this.foot).addEventListener('click', async () => {
             this.foot.innerHTML = ''
             await this.billDbShow(++p, 'false')
-            this.bottomShow()
         })
     }
 
@@ -114,7 +109,6 @@ class UserBillView{
                 this.foot.innerHTML = ''
                 await this.billDbShow(goP, 'false')
                 p = goP
-                this.bottomShow()
             } else {
                 alert('页面不存在')
             }
@@ -122,8 +116,7 @@ class UserBillView{
         })
     }
     async flash(){
-        await this.billDbShow()
-        await this.bottomShow()
+        await this.billDbShow(p)
     }
     async opButton() {
         o('.flash', this.subPage).addEventListener('click', async () => {
@@ -223,7 +216,10 @@ class OpCashView{
             },
         }
         const data = await new CashOut().get(param)
-        if (data) dbBody.innerHTML = this.cashesDbTemp(data)
+        if (data) {
+            dbBody.innerHTML = this.cashesDbTemp(data)
+            this.bottomShow()
+        }
         else dbBody.innerHTML = `<div style="height: 50px;line-height: 50px; color: red;">暂无结算账单</div>`
     }
 
@@ -265,7 +261,6 @@ class OpCashView{
         o('.prev', this.foot).addEventListener('click', async () => {
             this.foot.innerHTML = ''
             await this.cashesDbShow(--p, 'false')
-            this.bottomShow()
         })
     }
 
@@ -273,7 +268,6 @@ class OpCashView{
         o('.next', this.foot).addEventListener('click', async () => {
             this.foot.innerHTML = ''
             await this.cashesDbShow(++p, 'false')
-            this.bottomShow()
         })
     }
 
@@ -284,7 +278,6 @@ class OpCashView{
                 this.foot.innerHTML = ''
                 await this.cashesDbShow(goP, 'false')
                 p = goP
-                this.bottomShow()
             } else {
                 alert('页面不存在')
             }
@@ -292,8 +285,7 @@ class OpCashView{
         })
     }
     async flash(){
-        await this.cashesDbShow()
-        await this.bottomShow()
+        await this.cashesDbShow(p)
     }
     singleCheck(e) {
         if (e.checked) {
@@ -375,7 +367,10 @@ class OpBillView{
             },
         }
         const data = await new Bills().get(param)
-        if(data) dbBody.innerHTML = this.billsDbTemp(data)
+        if(data) {
+            dbBody.innerHTML = this.billsDbTemp(data)
+            this.bottomShow()
+        }
         else dbBody.innerHTML = `<div style="height: 50px;line-height: 50px; color: red;">暂无账单</div>`
     }
     billsDbTemp(data){
@@ -412,7 +407,6 @@ class OpBillView{
         o('.prev', this.foot).addEventListener('click', async () => {
             this.foot.innerHTML = ''
             await this.billsDbShow(--p, 'false')
-            this.bottomShow()
         })
     }
 
@@ -420,7 +414,6 @@ class OpBillView{
         o('.next', this.foot).addEventListener('click', async () => {
             this.foot.innerHTML = ''
             await this.billsDbShow(++p, 'false')
-            this.bottomShow()
         })
     }
 
@@ -431,7 +424,6 @@ class OpBillView{
                 this.foot.innerHTML = ''
                 await this.billsDbShow(goP, 'false')
                 p = goP
-                this.bottomShow()
             } else {
                 alert('页面不存在')
             }
@@ -439,8 +431,7 @@ class OpBillView{
         })
     }
     async flash(){
-        await this.billsDbShow()
-        await this.bottomShow()
+        await this.billsDbShow(p)
     }
     async opButton() {
         o('.flash', this.subPage).addEventListener('click', async () => {

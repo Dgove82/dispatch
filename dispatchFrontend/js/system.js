@@ -15,17 +15,13 @@ class SystemTab {
                 await this.infoChangeTemp()
                 break
             case '2':
-                const userDbView = new UsersOpView()
-                await userDbView.userDbShow()
-                userDbView.bottomShow()
+                await new UsersOpView().userDbShow()
                 break
             case '3':
                 await new ShopOpView().shopDbShow()
                 break
             case '4':
-                const logDbView = new LogsOpView()
-                await logDbView.logDbShow()
-                logDbView.bottomShow()
+                await new LogsOpView().logDbShow()
                 break
             default:
                 break
@@ -106,7 +102,10 @@ class UsersOpView {
             },
         }
         const data = await new Users().get(param)
-        if (data) this.dbBody.innerHTML = this.userDbTemp(data)
+        if (data) {
+            this.dbBody.innerHTML = this.userDbTemp(data)
+            this.bottomShow()
+        }
         else this.dbBody.innerHTML = `<div style="height: 50px;line-height: 50px; color: red;">暂无用户</div>`
     }
 
@@ -151,7 +150,6 @@ class UsersOpView {
         o('.prev', this.foot).addEventListener('click', async () => {
             this.foot.innerHTML = ''
             await this.userDbShow(--p, 'false')
-            this.bottomShow()
         })
     }
 
@@ -159,7 +157,6 @@ class UsersOpView {
         o('.next', this.foot).addEventListener('click', async () => {
             this.foot.innerHTML = ''
             await this.userDbShow(++p, 'false')
-            this.bottomShow()
         })
     }
 
@@ -170,7 +167,6 @@ class UsersOpView {
                 this.foot.innerHTML = ''
                 await this.userDbShow(goP, 'false')
                 p = goP
-                this.bottomShow()
             } else {
                 alert('页面不存在')
             }
@@ -186,8 +182,7 @@ class UsersOpView {
         })
         // 刷新操作 - done
         o('.flash', subPage).addEventListener('click', async () => {
-            await this.userDbShow()
-            await this.bottomShow()
+            await this.userDbShow(p)
         })
 
         // 修改操作 - done
@@ -208,7 +203,7 @@ class UsersOpView {
         function isChecked() {
             const cb = o('.db .db-body .check input:checked')
             if (cb) return cb
-            else alert('请先选择对应订单')
+            else alert('请先选择对应用户')
         }
 
         function singleCheck(e) {
@@ -241,8 +236,7 @@ class UsersOpView {
                     const result = await new Users().put({data})
                     if (result) {
                         alert('修改成功')
-                        await this.userDbShow()
-                        await this.bottomShow()
+                        await this.userDbShow(p)
                     } else alert('error')
                     this.modal.close()
                 }
@@ -255,7 +249,20 @@ class UsersOpView {
             const title = '删除'
             const content = contentTemp({type: 1, e: cb})
             this.modal.renewTemplate(title, content)
-            alert('暂时无法删除')
+            o('.dialog .bottom .btn').addEventListener('click', async() =>{
+                const data = {
+                    id: this.row.dataset.id,
+                }
+                const result = await new Users().delete({data})
+                if (result){
+                    console.log(result)
+                    alert('删除成功')
+                    await this.userDbShow(p)
+                }else{
+                    alert('删除失败')
+                }
+                this.modal.close()
+            })
         }
 
         // 新增菜单
@@ -283,7 +290,6 @@ class UsersOpView {
                 if (result) {
                     alert('增加成功')
                     await this.userDbShow()
-                    await this.bottomShow()
                 } else alert('error')
                 this.modal.close()
             })
@@ -305,7 +311,7 @@ class UsersOpView {
             this.row = getParent(e, 'ul')
             const children = this.row.children
             let content = `<label class="tt">用户名:${children[2].innerText}</label>`
-            if (type === 1) content += `<div class="tt">暂时无法删除</div>`
+            if (type === 1) content += `<div class="tt" style="color: red;">确定要删除该用户吗?</div>`
             else {
                 content += `<label class="tt">姓名:<input id="uname" value="${children[3].innerText}"></label>
                             <label class="tt">密码:<input id="password" value=""></label>
@@ -525,7 +531,10 @@ class LogsOpView{
             },
         }
         const data = await new Log().get(param)
-        if (data) this.dbBody.innerHTML = this.logDbTemp(data)
+        if (data) {
+            this.dbBody.innerHTML = this.logDbTemp(data)
+            this.bottomShow()
+        }
         else this.dbBody.innerHTML = `<div style="height: 50px;line-height: 50px; color: red;">暂无日志记录</div>`
     }
 
@@ -563,7 +572,6 @@ class LogsOpView{
         o('.prev', this.foot).addEventListener('click', async () => {
             this.foot.innerHTML = ''
             await this.logDbShow(--p, 'false')
-            this.bottomShow()
         })
     }
 
@@ -571,7 +579,6 @@ class LogsOpView{
         o('.next', this.foot).addEventListener('click', async () => {
             this.foot.innerHTML = ''
             await this.logDbShow(++p, 'false')
-            this.bottomShow()
         })
     }
 
@@ -582,7 +589,6 @@ class LogsOpView{
                 this.foot.innerHTML = ''
                 await this.logDbShow(goP, 'false')
                 p = goP
-                this.bottomShow()
             } else {
                 alert('页面不存在')
             }
@@ -598,8 +604,7 @@ class LogsOpView{
         })
         // 刷新操作 - done
         o('.flash', subPage).addEventListener('click', async () => {
-            await this.logDbShow()
-            await this.bottomShow()
+            await this.logDbShow(p)
         })
 
         // 删除操作
@@ -634,12 +639,23 @@ class LogsOpView{
         const dialogDelete = () => {
             const cb = isChecked()
             if (!cb) return
+            this.row = getParent(cb, 'ul')
             const title = '删除'
-            const content = `<div class="tt">暂时无法删除</div>`
+            const content = `<div class="tt" style="color: red;">只允许删除info类型日志<br>确定要删除此记录吗?</div>`
             this.modal.renewTemplate(title, content)
             const submit = o('.dialog .bottom .btn')
-            submit.addEventListener('click', ()=>{
-                alert('暂时无法删除')
+            submit.addEventListener('click', async ()=>{
+                const data = {
+                    id: this.row.dataset.id,
+                }
+                const result = await new Log().delete({data})
+                if (result){
+                    alert('删除成功')
+                    await this.logDbShow(p)
+                }else{
+                    alert('删除失败')
+                }
+                this.modal.close()
             })
         }
 

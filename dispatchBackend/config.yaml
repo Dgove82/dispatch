@@ -18,7 +18,7 @@ settlement_days: 15
 # 定时任务
 crontab:
   # 分 时 天 月 年
-  - due: '0 0 * * *'
+  - due: '1 0 * * *'
     task: 'dispatch.task.timed_task'
 
 

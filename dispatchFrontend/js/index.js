@@ -100,7 +100,7 @@ class SearchBox{
                 <div class="item">${data.updateTime? data.updateTime.replace('T', ' ') : null}</div>
                 <div class="item">${data.buyer}</div>
                 <div class="item">${data.buyerid}</div>
-                <div class="item">${['待接单', '进行中', '待验收', '已完成', '冻结中'][data.status]}</div>
+                <div class="item">${['待接单', '进行中', '待验收', '已完成', '退款处理', '冻结中'][data.status]}</div>
                 <div class="item">${['待发货', '已发货', '已退款', '退款中', '交易成功', '其他'][data.tbstatus]}</div>`
     }
 }

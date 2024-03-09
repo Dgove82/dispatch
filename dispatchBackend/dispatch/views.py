@@ -133,7 +133,7 @@ class UserView(APIView):
         ser.validated_data.pop('password')
         ser.save(password=Dgove.md5(request.data['password']))
         target = dict(ser.data)
-        Log(things=f'创建了用户{request.data.username}', target=request.user.username).add()
+        Log(things=f'创建了用户{request.data.get("username")}', target=request.user.username).add()
         # target.pop('password')
         return Response({'code': 200, 'msg': '用户添加成功', 'data': target})
 
@@ -157,7 +157,7 @@ class UserView(APIView):
         return Response({'code': 1007, 'msg': '更新失败', "error": ser.errors})
 
     def delete(self, request):
-        uid = request.query_params.get('id')
+        uid = request.data.get('id')
         if not uid:
             return Response({'code': 1005, 'msg': '缺少查询参数'})
         user = models.User.objects.filter(id=uid).first()
@@ -165,7 +165,7 @@ class UserView(APIView):
             return Response({'code': 1006, 'msg': '用户不存在'})
         Log(things=f'删除了用户{user.username}', target=request.user.username).delete()
         user.delete()
-        return Response({'code': 200, 'msg': f'{user.username}删除成功'})
+        return Response({'code': 200, 'msg': f'{user.username}删除成功', 'data': UserSerializer(user).data})
 
 
 # 用户自我管理个人信息
@@ -320,11 +320,12 @@ class OrderView(APIView):
                 return Ident(data).ident_create()
         elif user_id:
             if user_id == '-1':
-                order = models.Order.objects.filter(user__isnull=True).order_by('-createTime')
+                order = models.Order.objects.filter(user__isnull=True, status__lt=3).order_by('-createTime')
             elif user_id == '-2':
                 order = models.Order.objects.filter(status=2, tbstatus=1).order_by('-createTime')
             else:
-                order = models.Order.objects.filter(user_id=user_id, status__lt=3).order_by('-createTime')
+                # 查看自己的所有订单
+                order = models.Order.objects.filter(user_id=user_id).order_by('-createTime')
         else:
             order = models.Order.objects.order_by('-createTime')
         return order
@@ -420,6 +421,9 @@ class OrderView(APIView):
                 order.status = status
                 Log(things=f'订单{order.tid}的状态被更新了', target=request.user.username).update()
             else:
+                if is_admin(request.user):
+                    order.status = status
+                    Log(things=f'订单{order.tid}的状态被【管理员】更新了', target=request.user.username).update()
                 Log(things=f'非法操作', target=request.user.username).error()
         elif user_id and not order.user and request.user.id == int(user_id):
             order.user_id = user_id
@@ -433,6 +437,17 @@ class OrderView(APIView):
             Log(things=f'订单{order.tid}信息修改失败', target=request.user.username).error()
             return Response({'code': 1208, 'msg': f'修改异常{e}'})
         return Response({'code': 200, 'msg': '修改成功', 'data': OrderSerializer(instance=order).data})
+
+    def delete(self, request):
+        order_id = request.data.get('id')
+        if not order_id:
+            return Response({'code': 1209, 'msg': '缺少参数'})
+        order = models.Order.objects.filter(id=order_id).first()
+        if not order:
+            return Response({'code':1210, 'msg': '订单丢失'})
+        order.delete()
+        Log(things=f'订单{order.tid}被删除', target=request.user.username).delete()
+        return Response({'code': 200, 'msg': '删除成功', 'data': OrderSerializer(instance=order).data})
 
 
 class AgisoView(APIView):
@@ -530,9 +545,11 @@ class Ident:
             elif index == 2:
                 # 4
                 self.serializer['tbstatus'] = 4
+                self.serializer['status'] = 3
             else:
                 # 2 / 3
                 self.serializer['tbstatus'] = 2
+                self.serializer['status'] = 4
         except ValueError:
             # 5
             self.serializer['tbstatus'] = 5
@@ -786,6 +803,18 @@ class LogView(APIView):
             logs = self.paging_item(log, page, page_size)
             ser = LogSerializer(many=True, instance=logs)
             return Response({'code': 200, 'msg': '查询成功', 'data': ser.data, 'ps': ps})
+
+    def delete(self, request):
+        log_id = request.data.get('id')
+        if not log_id:
+            return Response({'code': 1005, 'msg': '缺少查询参数'})
+        log = models.Logs.objects.filter(id=log_id).first()
+        if not log:
+            return Response({'code': 1006, 'msg': '日志不存在'})
+        if log.tag != 'info':
+            return Response({'code': 1007, 'msg': '只允许删除info类型日志'})
+        log.delete()
+        return Response({'code': 200, 'msg': f'日志删除成功', 'data': LogSerializer(log).data})
 
 
 class Log:

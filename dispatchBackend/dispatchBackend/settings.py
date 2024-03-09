@@ -21,9 +21,12 @@ with open(f'{BASE_DIR}/config.yaml', 'r') as ymlfile:
 
 # 用户登入验证盐
 KEY = config['key']
+
 WEB = config['web']
 
-CRONJOBS = [(item['due'], item['task']) for item in config['crontab']]
+SETTLEMENT_DAYS = config['settlement_days']
+
+CRONJOBS = [(item['due'], item['task'], f'>> {BASE_DIR}/debug.log 2>&1') for item in config['crontab']]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -39,17 +42,25 @@ ALLOWED_HOSTS = ['*']
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'detailed': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+            'datefmt': '%H:%M:%S',  # 定义时间格式为时:分:秒
+        },
+    },
     'handlers': {
         'file': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': f'{BASE_DIR}/debug.log',
+            'formatter': 'detailed',
         },
     },
     'loggers': {
         'django': {
             'handlers': ['file'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': True,
         },
     },
@@ -104,7 +115,7 @@ DATABASES = {
         'PASSWORD': config['mysql']['password'],
         'HOST': config['mysql']['host'],
         'PORT': config['mysql']['port'],
-        'CONN_MAX_AGE': 60,
+        'CONN_MAX_AGE': 300,
     }
 }
 
