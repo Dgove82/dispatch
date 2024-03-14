@@ -424,7 +424,8 @@ class OrderView(APIView):
                 if is_admin(request.user):
                     order.status = status
                     Log(things=f'订单{order.tid}的状态被【管理员】更新了', target=request.user.username).update()
-                Log(things=f'非法操作', target=request.user.username).error()
+                else:
+                    Log(things=f'非法操作', target=request.user.username).error()
         elif user_id and not order.user and request.user.id == int(user_id):
             order.user_id = user_id
             order.status = '1' if order.status == 0 else order.status
