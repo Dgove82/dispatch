@@ -1,0 +1,7 @@
+__pycache__
+*.log
+*.pem
+*.cer
+.idea
+.DS_Store
+.ini
